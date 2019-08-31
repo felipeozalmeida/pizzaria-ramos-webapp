@@ -1,0 +1,54 @@
+{
+  "pizzas": [
+    {
+      "id": 1,
+      "name": "Muçarela",
+      "ingredients": "Molho de tomate, queijo e orégano.",
+      "price": 20.0,
+      "image": {
+        "src": "https://via.placeholder.com/200",
+        "alt": "Pizza sabor muçarela."
+      }
+    },
+    {
+      "id": 2,
+      "name": "Calabresa",
+      "ingredients": "Calabresa, cebola e orégano.",
+      "price": 20.0,
+      "image": {
+        "src": "https://via.placeholder.com/200",
+        "alt": "Pizza sabor calabresa."
+      }
+    },
+    {
+      "id": 3,
+      "name": "Baiana",
+      "ingredients": "Calabresa, pimenta e orégano.",
+      "price": 21.0,
+      "image": {
+        "src": "https://via.placeholder.com/200",
+        "alt": "Pizza sabor baiana."
+      }
+    },
+    {
+      "id": 4,
+      "name": "Portuguesa",
+      "ingredients": "Molho de tomate, presunto e queijo.",
+      "price": 22.0,
+      "image": {
+        "src": "https://via.placeholder.com/200",
+        "alt": "Pizza sabor portuguesa."
+      }
+    },
+    {
+      "id": 5,
+      "name": "Escarola",
+      "ingredients": "Molho de tomate, queijo e escarola.",
+      "price": 22.0,
+      "image": {
+        "src": "https://via.placeholder.com/200",
+        "alt": "Pizza sabor escarola."
+      }
+    }
+  ]
+}
