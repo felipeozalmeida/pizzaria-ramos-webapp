@@ -1,32 +1,35 @@
 <template>
   <div class="PizzaItem">
-    <b-card
-      overlay
-      text-variant="white"
-      sub-title-text-variant="white"
-      :img-src="pizza.image.src"
-      :img-alt="pizza.image.alt"
-      :title="pizza.name"
-      :sub-title="`R$ ${pizza.price}`"
-    >
-      <div class="PizzaItem__toolbar">
-        <b-button
-          class="PizzaItem__button"
-          variant="outline-light"
-          size="sm"
-          @click="handleEdit(pizza)"
-        >
-          <font-awesome-icon :icon="['fas', 'pen']" />
-        </b-button>
-        <b-button
-          class="PizzaItem__button"
-          variant="outline-light"
-          size="sm"
-          @click="handleDelete(pizza)"
-        >
-          <font-awesome-icon :icon="['fas', 'trash']" />
-        </b-button>
-      </div>
+    <b-card no-body>
+      <b-card-img-lazy
+        class="PizzaItem__img"
+        :src="pizza.image.src"
+        :alt="pizza.image.alt"
+      />
+      <b-card-body overlay body-text-variant="white">
+        <b-card-title>{{ pizza.name }}</b-card-title>
+        <b-card-sub-title sub-title-text-variant="white">
+          R$ {{ pizza.price }}
+        </b-card-sub-title>
+        <div class="PizzaItem__toolbar">
+          <b-button
+            class="PizzaItem__button"
+            variant="outline-light"
+            size="sm"
+            @click="handleEdit(pizza)"
+          >
+            <font-awesome-icon :icon="['fas', 'pen']" />
+          </b-button>
+          <b-button
+            class="PizzaItem__button"
+            variant="outline-light"
+            size="sm"
+            @click="handleDelete(pizza)"
+          >
+            <font-awesome-icon :icon="['fas', 'trash']" />
+          </b-button>
+        </div>
+      </b-card-body>
     </b-card>
   </div>
 </template>
@@ -52,6 +55,10 @@ export default {
 .PizzaItem {
   text-shadow: 0.0625rem 0.0625rem 0.625rem #000;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+  &__img {
+    filter: brightness(0.75);
+  }
 
   &__toolbar {
     position: absolute;
