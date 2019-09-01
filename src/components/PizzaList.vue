@@ -14,15 +14,12 @@
           v-for="pizza in pizzas"
           :key="pizza.id"
         >
-          <b-card
-            overlay
-            text-variant="white"
-            sub-title-text-variant="white"
+          <BaseCardItem
             :img-src="pizza.image.src"
             :img-alt="pizza.image.alt"
             :title="pizza.name"
             :sub-title="`R$ ${pizza.price}`"
-          ></b-card>
+          />
         </b-col>
       </template>
     </b-row>
@@ -30,8 +27,13 @@
 </template>
 
 <script>
+import BaseCardItem from "./BaseCardItem";
+
 export default {
   name: "PizzaList",
+  components: {
+    BaseCardItem
+  },
   props: {
     pizzas: Array
   }
