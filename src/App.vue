@@ -1,22 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
+    <header>
+      <b-jumbotron
+        fluid
+        header="Pizzaria"
+        lead="Atendendo a seus pedidos, sempre!"
+      ></b-jumbotron>
+    </header>
+    <main>
+      <b-container>
+        <b-row>
+          <b-col>
+            <PizzaList :pizzas="pizzas" />
+          </b-col>
+        </b-row>
+      </b-container>
+    </main>
   </div>
 </template>
 
 <script>
+import PizzaService from "./services/pizza.service";
+import PizzaList from "./components/PizzaList";
+
 export default {
-  name: "app"
+  name: "app",
+  components: {
+    PizzaList
+  },
+  data() {
+    return {
+      pizzas: []
+    };
+  },
+  methods: {
+    handleEdit() {},
+    handleDelete() {}
+  },
+  mounted() {
+    PizzaService.get().then(response => {
+      this.pizzas = response.data.pizzas;
+    });
+  }
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="scss"></style>
