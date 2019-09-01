@@ -6,7 +6,7 @@
       "ingredients": "Molho de tomate, queijo e orégano.",
       "price": 20.0,
       "image": {
-        "src": "https://via.placeholder.com/200",
+        "src": "https://picsum.photos/200",
         "alt": "Pizza sabor muçarela."
       }
     },
@@ -16,7 +16,7 @@
       "ingredients": "Calabresa, cebola e orégano.",
       "price": 20.0,
       "image": {
-        "src": "https://via.placeholder.com/200",
+        "src": "https://picsum.photos/200",
         "alt": "Pizza sabor calabresa."
       }
     },
@@ -26,7 +26,7 @@
       "ingredients": "Calabresa, pimenta e orégano.",
       "price": 21.0,
       "image": {
-        "src": "https://via.placeholder.com/200",
+        "src": "https://picsum.photos/200",
         "alt": "Pizza sabor baiana."
       }
     },
@@ -36,7 +36,7 @@
       "ingredients": "Molho de tomate, presunto e queijo.",
       "price": 22.0,
       "image": {
-        "src": "https://via.placeholder.com/200",
+        "src": "https://picsum.photos/200",
         "alt": "Pizza sabor portuguesa."
       }
     },
@@ -46,7 +46,7 @@
       "ingredients": "Molho de tomate, queijo e escarola.",
       "price": 22.0,
       "image": {
-        "src": "https://via.placeholder.com/200",
+        "src": "https://picsum.photos/200",
         "alt": "Pizza sabor escarola."
       }
     }
