@@ -11,7 +11,8 @@
       <b-container>
         <b-row>
           <b-col>
-            <PizzaList :pizzas="pizzas" />
+            <BaseSpinner v-show="loading" />
+            <PizzaList :pizzas="pizzas" v-show="!loading" />
           </b-col>
         </b-row>
       </b-container>
@@ -21,15 +22,18 @@
 
 <script>
 import PizzaService from "./services/pizza.service";
+import BaseSpinner from "./components/BaseSpinner";
 import PizzaList from "./components/PizzaList";
 
 export default {
   name: "app",
   components: {
+    BaseSpinner,
     PizzaList
   },
   data() {
     return {
+      loading: false,
       pizzas: []
     };
   },
@@ -38,9 +42,14 @@ export default {
     handleDelete() {}
   },
   mounted() {
-    PizzaService.get().then(response => {
-      this.pizzas = response.data.pizzas;
-    });
+    this.loading = true;
+    PizzaService.get()
+      .then(response => {
+        this.pizzas = response.data.pizzas;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 };
 </script>
