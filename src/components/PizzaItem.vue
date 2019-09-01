@@ -54,7 +54,7 @@ export default {
 <style lang="scss" scoped>
 .PizzaItem {
   text-shadow: 0.0625rem 0.0625rem 0.625rem #000;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
   transition: box-shadow 0.15s ease-in-out;
 
   &__img {
@@ -78,7 +78,7 @@ export default {
   }
 
   &:hover {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
   }
 
   &:hover &__toolbar {
