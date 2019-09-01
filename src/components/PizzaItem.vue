@@ -1,6 +1,6 @@
 <template>
   <div class="PizzaItem">
-    <b-card no-body>
+    <b-card class="border-0" no-body>
       <b-card-img-lazy
         class="PizzaItem__img"
         :src="pizza.image.src"
@@ -54,7 +54,8 @@ export default {
 <style lang="scss" scoped>
 .PizzaItem {
   text-shadow: 0.0625rem 0.0625rem 0.625rem #000;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
   &__img {
     filter: brightness(0.75);
@@ -74,6 +75,11 @@ export default {
   &__button {
     margin-left: 0.125rem;
     margin-right: 0.125rem;
+  }
+
+  &:hover {
+    transform: scale(1.025);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
   }
 
   &:hover &__toolbar {
