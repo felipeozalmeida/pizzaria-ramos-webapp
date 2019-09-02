@@ -1,6 +1,18 @@
 <template>
   <div class="PizzaForm">
     <b-form novalidate :validated="wasValidated" @submit.prevent="handleSubmit">
+      <div class="d-flex justify-content-center">
+        <img-inputer
+          no-hover-effect
+          class="border mb-3"
+          placeholder="Adicionar foto da pizza (máx. 2 MB)"
+          bottom-text="Arraste e solte aqui ou clique para alterar (máx. 2 MB)"
+          exceed-size-text="Tamanho do arquivo deve ser menor que "
+          :max-size="2048"
+          :img-src="formData.imageUrl"
+          v-model="formData.imageFile"
+        />
+      </div>
       <b-form-row>
         <b-col cols="9">
           <b-form-group
@@ -70,7 +82,8 @@ export default {
         name: this.pizza.name || "",
         price: this.pizza.price || 0.0,
         ingredients: this.pizza.ingredients || "",
-        image: this.pizza.image.src || null
+        imageUrl: this.pizza.image.src || null,
+        imageFile: null
       }
     };
   },
