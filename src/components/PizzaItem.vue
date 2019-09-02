@@ -16,7 +16,7 @@
             class="PizzaItem__button"
             variant="outline-light"
             size="sm"
-            @click="handleEdit(pizza)"
+            @click="handleView(pizza)"
           >
             <font-awesome-icon :icon="['fas', 'pen']" />
           </b-button>
@@ -41,8 +41,8 @@ export default {
     pizza: Object
   },
   methods: {
-    handleEdit(pizza) {
-      this.$emit("edit", pizza);
+    handleView(pizza) {
+      this.$emit("view", pizza);
     },
     handleDelete(pizza) {
       this.$emit("delete", pizza);
