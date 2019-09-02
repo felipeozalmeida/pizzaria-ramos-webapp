@@ -12,7 +12,19 @@
         <b-row>
           <b-col>
             <BaseSpinner v-show="loading" />
-            <PizzaList :pizzas="pizzas" v-show="!loading" />
+            <PizzaList
+              :pizzas="pizzas"
+              v-show="!loading"
+              @view="handleView"
+              @delete="handleDelete"
+            />
+            <b-modal hide-footer title="Editar pizza" v-model="showPizza">
+              <PizzaForm
+                :pizza="pizza"
+                :was-validated="wasValidated"
+                @edit="handleEdit"
+              />
+            </b-modal>
           </b-col>
         </b-row>
       </b-container>
@@ -24,22 +36,41 @@
 import PizzaService from "./services/pizza.service";
 import BaseSpinner from "./components/BaseSpinner";
 import PizzaList from "./components/PizzaList";
+import PizzaForm from "./components/PizzaForm";
 
 export default {
   name: "app",
   components: {
     BaseSpinner,
-    PizzaList
+    PizzaList,
+    PizzaForm
   },
   data() {
     return {
       loading: false,
+      showPizza: false,
+      wasValidated: false,
+      pizza: {},
       pizzas: []
     };
   },
   methods: {
-    handleEdit() {},
-    handleDelete() {}
+    handleView(pizza) {
+      this.pizza = pizza;
+      this.showPizza = true;
+    },
+    handleEdit(e, pizza) {
+      this.loading = true;
+      this.wasValidated = true;
+      if (e.target.checkValidity()) {
+        console.log("Valid!");
+        console.log(pizza);
+      }
+      this.loading = false;
+    },
+    handleDelete(pizza) {
+      console.log(pizza);
+    }
   },
   mounted() {
     this.loading = true;
