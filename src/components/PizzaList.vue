@@ -16,7 +16,7 @@
         >
           <PizzaItem
             :pizza="pizza"
-            @edit="handleEdit"
+            @view="handleView"
             @delete="handleDelete"
           ></PizzaItem>
         </b-col>
@@ -37,8 +37,12 @@ export default {
     pizzas: Array
   },
   methods: {
-    handleEdit() {},
-    handleDelete() {}
+    handleView(pizza) {
+      this.$emit("view", pizza);
+    },
+    handleDelete(pizza) {
+      this.$emit("delete", pizza);
+    }
   }
 };
 </script>
