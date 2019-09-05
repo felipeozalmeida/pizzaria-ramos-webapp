@@ -55,7 +55,7 @@ export default {
 .PizzaItem {
   text-shadow: 0.0625rem 0.0625rem 0.625rem #000;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
-  transition: box-shadow 0.15s ease-in-out;
+  transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
 
   &__img {
     filter: brightness(0.75);
@@ -79,6 +79,7 @@ export default {
 
   &:hover {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    transform: scale(1.025);
   }
 
   &:hover &__toolbar {
