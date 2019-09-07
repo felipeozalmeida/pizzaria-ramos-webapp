@@ -12,6 +12,15 @@
         <b-row>
           <b-col>
             <BaseSpinner v-show="loading" />
+            <b-row>
+              <b-col>
+                <div class="d-flex justify-content-end mb-3">
+                  <b-button variant="success" @click="handleCreate">
+                    <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
+                  </b-button>
+                </div>
+              </b-col>
+            </b-row>
             <PizzaList
               :pizzas="pizzas"
               v-show="!loading"
@@ -52,6 +61,10 @@ export default {
   methods: {
     handleView(pizza) {
       this.pizza = pizza;
+      this.showPizza = true;
+    },
+    handleCreate() {
+      this.pizza = {};
       this.showPizza = true;
     },
     handleEdit(e, pizza) {

@@ -1,13 +1,14 @@
 import Vue from "vue";
 
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faCircleNotch,
   faPen,
-  faTrash
+  faTrash,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faCircleNotch, faPen, faTrash);
+library.add(faCircleNotch, faPen, faTrash, faPlus);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
