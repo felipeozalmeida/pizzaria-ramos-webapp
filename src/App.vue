@@ -19,11 +19,7 @@
               @delete="handleDelete"
             />
             <b-modal hide-footer title="Editar pizza" v-model="showPizza">
-              <PizzaForm
-                :pizza="pizza"
-                :was-validated="wasValidated"
-                @edit="handleEdit"
-              />
+              <PizzaForm :pizza="pizza" @edit="handleEdit" />
             </b-modal>
           </b-col>
         </b-row>
@@ -49,7 +45,6 @@ export default {
     return {
       loading: false,
       showPizza: false,
-      wasValidated: false,
       pizza: {},
       pizzas: []
     };
@@ -61,7 +56,6 @@ export default {
     },
     handleEdit(e, pizza) {
       this.loading = true;
-      this.wasValidated = true;
       if (e.target.checkValidity()) {
         console.log("Valid!");
         console.log(pizza);

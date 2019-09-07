@@ -1,6 +1,6 @@
 <template>
   <div class="PizzaForm">
-    <b-form novalidate :validated="wasValidated" @submit.prevent="handleSubmit">
+    <b-form novalidate @submit.prevent="handleSubmit">
       <div class="d-flex justify-content-center">
         <img-inputer
           no-hover-effect
@@ -72,8 +72,7 @@
 export default {
   name: "PizzaForm",
   props: {
-    pizza: Object,
-    wasValidated: Boolean
+    pizza: Object
   },
   data() {
     return {
@@ -84,11 +83,13 @@ export default {
         ingredients: this.pizza.ingredients || "",
         imageUrl: this.pizza.image.src || null,
         imageFile: null
-      }
+      },
+      wasValidated: false
     };
   },
   methods: {
     handleSubmit(event) {
+      this.wasValidated = true;
       this.$emit("edit", event, this.formData);
     }
   }
