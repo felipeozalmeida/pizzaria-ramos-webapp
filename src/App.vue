@@ -12,28 +12,29 @@
         <b-row>
           <b-col>
             <BaseSpinner v-show="loading" />
-            <b-row>
-              <b-col>
-                <div class="d-flex justify-content-end mb-3">
-                  <b-button variant="success" @click="handleCreate">
-                    <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
-                  </b-button>
-                </div>
-              </b-col>
-            </b-row>
-            <PizzaList
-              :pizzas="pizzas"
-              v-show="!loading"
-              @view="handleView"
-              @delete="handleDelete"
-            />
-            <b-modal
-              hide-footer
-              :title="showPizzaModalTitle"
-              v-model="showPizza"
-            >
-              <PizzaForm :pizza="pizza" @submit="handleSave" />
-            </b-modal>
+            <template v-if="!loading">
+              <b-row>
+                <b-col>
+                  <div class="d-flex justify-content-end mb-3">
+                    <b-button variant="success" @click="handleCreate">
+                      <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
+                    </b-button>
+                  </div>
+                </b-col>
+              </b-row>
+              <PizzaList
+                :pizzas="pizzas"
+                @view="handleView"
+                @delete="handleDelete"
+              />
+              <b-modal
+                hide-footer
+                :title="showPizzaModalTitle"
+                v-model="showPizza"
+              >
+                <PizzaForm :pizza="pizza" @submit="handleSave" />
+              </b-modal>
+            </template>
           </b-col>
         </b-row>
       </b-container>
