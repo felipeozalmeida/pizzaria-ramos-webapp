@@ -11,7 +11,7 @@ function create() {
 }
 
 function update() {
-  return Axios.put("http://www.mocky.io/v2/5d7523ce3100008a229505a4"); // 200
+  return Axios.put("http://www.mocky.io/v2/5d7525043100007e2f9505a7"); // 204
   // return Axios.put("http://www.mocky.io/v2/5d75226d310000a61e9505a1"); // 409
   // return Axios.put("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
 }
