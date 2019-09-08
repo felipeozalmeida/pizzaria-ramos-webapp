@@ -82,6 +82,19 @@ export default {
       this.loading = false;
     },
     handleDelete(pizza) {
+      const message = `Pizza ${pizza.name}. Tem certeza?`;
+      this.$bvModal
+        .msgBoxConfirm(message, {
+          title: "Excluir pizza",
+          okTitle: "Sim",
+          cancelTitle: "Não"
+        })
+        .then(response => {
+          if (response) {
+            // delete pizza
+          }
+          console.log(response);
+        });
       console.log(pizza);
     }
   },
