@@ -16,8 +16,14 @@ function update() {
   // return Axios.put("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
 }
 
+function remove() {
+  return Axios.delete("http://www.mocky.io/v2/5d7525043100007e2f9505a7"); // 204
+  // return Axios.put("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
+}
+
 export default {
   get,
   create,
-  update
+  update,
+  remove
 };
