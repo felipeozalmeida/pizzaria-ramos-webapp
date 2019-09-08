@@ -27,8 +27,12 @@
               @view="handleView"
               @delete="handleDelete"
             />
-            <b-modal hide-footer title="Editar pizza" v-model="showPizza">
-              <PizzaForm :pizza="pizza" @edit="handleEdit" />
+            <b-modal
+              hide-footer
+              :title="showPizzaModalTitle"
+              v-model="showPizza"
+            >
+              <PizzaForm :pizza="pizza" @submit="handleSave" />
             </b-modal>
           </b-col>
         </b-row>
@@ -54,6 +58,7 @@ export default {
     return {
       loading: false,
       showPizza: false,
+      showPizzaModalTitle: "",
       pizza: {},
       pizzas: []
     };
@@ -62,17 +67,17 @@ export default {
     handleView(pizza) {
       this.pizza = pizza;
       this.showPizza = true;
+      this.showPizzaModalTitle = "Visualizar pizza";
     },
     handleCreate() {
       this.pizza = {};
       this.showPizza = true;
+      this.showPizzaModalTitle = "Adicionar pizza";
     },
-    handleEdit(e, pizza) {
+    handleSave(pizza) {
       this.loading = true;
-      if (e.target.checkValidity()) {
-        console.log("Valid!");
-        console.log(pizza);
-      }
+      console.log("Valid!");
+      console.log(pizza);
       this.loading = false;
     },
     handleDelete(pizza) {

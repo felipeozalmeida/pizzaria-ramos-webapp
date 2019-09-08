@@ -6,9 +6,11 @@ import {
   faCircleNotch,
   faPen,
   faTrash,
-  faPlus
+  faPlus,
+  faCheck,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faCircleNotch, faPen, faTrash, faPlus);
+library.add(faCircleNotch, faPen, faTrash, faPlus, faCheck, faTimes);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
