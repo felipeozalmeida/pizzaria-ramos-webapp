@@ -1,12 +1,12 @@
 <template>
   <div class="PizzaList">
-    <b-row no-gutters class="m-n1">
+    <b-row no-gutters class="m-n2">
       <template v-if="!pizzas.length">
         <p>Nenhuma pizza encontrada.</p>
       </template>
       <template v-else>
         <b-col
-          class="p-1"
+          class="p-2"
           cols="6"
           sm="4"
           md="3"
@@ -14,15 +14,11 @@
           v-for="pizza in pizzas"
           :key="pizza.id"
         >
-          <b-card
-            overlay
-            text-variant="white"
-            sub-title-text-variant="white"
-            :img-src="pizza.image.src"
-            :img-alt="pizza.image.alt"
-            :title="pizza.name"
-            :sub-title="`R$ ${pizza.price}`"
-          ></b-card>
+          <PizzaItem
+            :pizza="pizza"
+            @view="handleView"
+            @delete="handleDelete"
+          ></PizzaItem>
         </b-col>
       </template>
     </b-row>
@@ -30,10 +26,23 @@
 </template>
 
 <script>
+import PizzaItem from "./PizzaItem";
+
 export default {
   name: "PizzaList",
+  components: {
+    PizzaItem
+  },
   props: {
     pizzas: Array
+  },
+  methods: {
+    handleView(pizza) {
+      this.$emit("view", pizza);
+    },
+    handleDelete(pizza) {
+      this.$emit("delete", pizza);
+    }
   }
 };
 </script>
