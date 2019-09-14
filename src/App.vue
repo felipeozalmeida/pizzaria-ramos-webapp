@@ -89,10 +89,9 @@ export default {
           this.$bvToast.toast(
             notifications.PizzaService.create.message.success,
             {
-              toaster: "b-toaster-bottom-center",
+              ...notifications.config,
               title: notifications.defaults.title.success,
-              variant: "success",
-              solid: true
+              variant: "success"
             }
           );
           this.loading = true;

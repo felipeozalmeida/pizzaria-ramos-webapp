@@ -1,4 +1,8 @@
 export default {
+  config: {
+    solid: true,
+    toaster: "b-toaster-bottom-center"
+  },
   defaults: {
     title: {
       success: "Sucesso!"
