@@ -16,7 +16,11 @@
               <b-row>
                 <b-col>
                   <div class="d-flex justify-content-end mb-3">
-                    <b-button variant="success" @click="handleCreate">
+                    <b-button
+                      variant="success"
+                      @click="handleCreate"
+                      :disabled="didGetPizzasFailed"
+                    >
                       <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
                     </b-button>
                   </div>
@@ -62,12 +66,13 @@ export default {
   },
   data() {
     return {
+      pizza: {},
+      pizzas: [],
       loading: false,
       loadingPizzaForm: false,
+      didGetPizzasFailed: false,
       showPizza: false,
-      showPizzaModalTitle: "",
-      pizza: {},
-      pizzas: []
+      showPizzaModalTitle: ""
     };
   },
   methods: {
@@ -100,6 +105,7 @@ export default {
               this.pizzas = pizzas;
             })
             .catch(() => {
+              this.didGetPizzasFailed = true;
               this.$bvToast.toast(notifications.defaults.message.error, {
                 ...notifications.config,
                 title: notifications.defaults.title.error,
@@ -160,6 +166,7 @@ export default {
         this.pizzas = pizzas;
       })
       .catch(() => {
+        this.didGetPizzasFailed = true;
         this.$bvToast.toast(notifications.defaults.message.error, {
           ...notifications.config,
           title: notifications.defaults.title.error,
