@@ -13,10 +13,8 @@ export default {
     }
   },
   PizzaService: {
-    create: {
-      message: {
-        success: "Pizza adicionada com sucesso!"
-      }
+    message: {
+      success: "Pizza salva com sucesso!"
     }
   }
 };
