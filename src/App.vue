@@ -76,6 +76,24 @@ export default {
     };
   },
   methods: {
+    getPizzas() {
+      this.loading = true;
+      PizzaService.get()
+        .then(({ data: { pizzas } }) => {
+          this.pizzas = pizzas;
+        })
+        .catch(() => {
+          this.didGetPizzasFailed = true;
+          this.$bvToast.toast(notifications.defaults.message.error, {
+            ...notifications.config,
+            title: notifications.defaults.title.error,
+            variant: "danger"
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     handleView(pizza) {
       this.pizza = pizza;
       this.showPizza = true;
@@ -100,22 +118,7 @@ export default {
                 variant: "success"
               }
             );
-            this.loading = true;
-            PizzaService.get()
-              .then(({ data: { pizzas } }) => {
-                this.pizzas = pizzas;
-              })
-              .catch(() => {
-                this.didGetPizzasFailed = true;
-                this.$bvToast.toast(notifications.defaults.message.error, {
-                  ...notifications.config,
-                  title: notifications.defaults.title.error,
-                  variant: "danger"
-                });
-              })
-              .finally(() => {
-                this.loading = false;
-              });
+            this.getPizzas();
           })
           .catch(({ response }) => {
             if (response.status === 500) {
@@ -154,22 +157,7 @@ export default {
                 variant: "success"
               }
             );
-            this.loading = true;
-            PizzaService.get()
-              .then(({ data: { pizzas } }) => {
-                this.pizzas = pizzas;
-              })
-              .catch(() => {
-                this.didGetPizzasFailed = true;
-                this.$bvToast.toast(notifications.defaults.message.error, {
-                  ...notifications.config,
-                  title: notifications.defaults.title.error,
-                  variant: "danger"
-                });
-              })
-              .finally(() => {
-                this.loading = false;
-              });
+            this.getPizzas();
           })
           .catch(({ response }) => {
             if (response.status === 500) {
@@ -218,22 +206,7 @@ export default {
                     variant: "success"
                   }
                 );
-                this.loading = true;
-                PizzaService.get()
-                  .then(({ data: { pizzas } }) => {
-                    this.pizzas = pizzas;
-                  })
-                  .catch(() => {
-                    this.didGetPizzasFailed = true;
-                    this.$bvToast.toast(notifications.defaults.message.error, {
-                      ...notifications.config,
-                      title: notifications.defaults.title.error,
-                      variant: "danger"
-                    });
-                  })
-                  .finally(() => {
-                    this.loading = false;
-                  });
+                this.getPizzas();
               })
               .catch(({ response }) => {
                 if (response.status === 500) {
@@ -256,22 +229,7 @@ export default {
     }
   },
   mounted() {
-    this.loading = true;
-    PizzaService.get()
-      .then(({ data: { pizzas } }) => {
-        this.pizzas = pizzas;
-      })
-      .catch(() => {
-        this.didGetPizzasFailed = true;
-        this.$bvToast.toast(notifications.defaults.message.error, {
-          ...notifications.config,
-          title: notifications.defaults.title.error,
-          variant: "danger"
-        });
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    this.getPizzas();
   }
 };
 </script>
