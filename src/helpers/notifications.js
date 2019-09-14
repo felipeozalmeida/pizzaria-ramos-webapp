@@ -4,7 +4,11 @@ export default {
     toaster: "b-toaster-bottom-center"
   },
   defaults: {
+    message: {
+      error: "Serviço indisponível. Por favor, tente novamente mais tarde!"
+    },
     title: {
+      error: "Erro!",
       success: "Sucesso!"
     }
   },

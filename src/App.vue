@@ -103,8 +103,27 @@ export default {
               this.loading = false;
             });
         })
-        .catch(error => {
-          console.log(error);
+        .catch(({ response }) => {
+          if (response.status === 500) {
+            this.$bvToast.toast(notifications.defaults.message.error, {
+              ...notifications.config,
+              title: notifications.defaults.title.error,
+              variant: "danger"
+            });
+          } else if (response.status === 409) {
+            this.$bvToast.toast(response.data.error.message, {
+              ...notifications.config,
+              title: notifications.defaults.title.error,
+              variant: "danger"
+            });
+          }
+        })
+        .catch(() => {
+          this.$bvToast.toast(notifications.defaults.message.error, {
+            ...notifications.config,
+            title: notifications.defaults.title.error,
+            variant: "danger"
+          });
         })
         .finally(() => {
           this.loadingPizzaForm = false;
