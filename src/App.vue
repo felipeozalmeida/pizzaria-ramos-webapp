@@ -1,12 +1,6 @@
 <template>
   <div id="app">
-    <header>
-      <b-jumbotron
-        fluid
-        header="Pizzaria"
-        lead="Atendendo a seus pedidos, sempre!"
-      ></b-jumbotron>
-    </header>
+    <BaseHeader />
     <main>
       <b-container>
         <b-row>
@@ -52,6 +46,7 @@
 
 <script>
 import PizzaService from "./services/pizza.service";
+import BaseHeader from "./components/BaseHeader";
 import BaseSpinner from "./components/BaseSpinner";
 import PizzaList from "./components/PizzaList";
 import PizzaForm from "./components/PizzaForm";
@@ -60,6 +55,7 @@ import notifications from "./helpers/notifications";
 export default {
   name: "app",
   components: {
+    BaseHeader,
     BaseSpinner,
     PizzaList,
     PizzaForm
