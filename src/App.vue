@@ -92,11 +92,14 @@ export default {
         PizzaService.update(pizza)
           .then(() => {
             this.showPizza = false;
-            this.$bvToast.toast(notifications.PizzaService.message.success, {
-              ...notifications.config,
-              title: notifications.defaults.title.success,
-              variant: "success"
-            });
+            this.$bvToast.toast(
+              notifications.PizzaService.update.message.success,
+              {
+                ...notifications.config,
+                title: notifications.defaults.title.success,
+                variant: "success"
+              }
+            );
             this.loading = true;
             PizzaService.get()
               .then(({ data: { pizzas } }) => {
@@ -143,11 +146,14 @@ export default {
         PizzaService.create(pizza)
           .then(() => {
             this.showPizza = false;
-            this.$bvToast.toast(notifications.PizzaService.message.success, {
-              ...notifications.config,
-              title: notifications.defaults.title.success,
-              variant: "success"
-            });
+            this.$bvToast.toast(
+              notifications.PizzaService.create.message.success,
+              {
+                ...notifications.config,
+                title: notifications.defaults.title.success,
+                variant: "success"
+              }
+            );
             this.loading = true;
             PizzaService.get()
               .then(({ data: { pizzas } }) => {
