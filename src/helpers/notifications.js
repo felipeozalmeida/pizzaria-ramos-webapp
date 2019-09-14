@@ -17,6 +17,16 @@ export default {
       message: {
         success: "Pizza adicionada com sucesso!"
       }
+    },
+    update: {
+      message: {
+        success: "Pizza atualizada com sucesso!"
+      }
+    },
+    remove: {
+      message: {
+        success: "Pizza removida com sucesso!"
+      }
     }
   }
 };

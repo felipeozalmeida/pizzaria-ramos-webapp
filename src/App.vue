@@ -76,6 +76,24 @@ export default {
     };
   },
   methods: {
+    getPizzas() {
+      this.loading = true;
+      PizzaService.get()
+        .then(({ data: { pizzas } }) => {
+          this.pizzas = pizzas;
+        })
+        .catch(() => {
+          this.didGetPizzasFailed = true;
+          this.$bvToast.toast(notifications.defaults.message.error, {
+            ...notifications.config,
+            title: notifications.defaults.title.error,
+            variant: "danger"
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     handleView(pizza) {
       this.pizza = pizza;
       this.showPizza = true;
@@ -88,59 +106,85 @@ export default {
     },
     handleSave(pizza) {
       this.loadingPizzaForm = true;
-      PizzaService.create(pizza)
-        .then(() => {
-          this.showPizza = false;
-          this.$bvToast.toast(
-            notifications.PizzaService.create.message.success,
-            {
-              ...notifications.config,
-              title: notifications.defaults.title.success,
-              variant: "success"
-            }
-          );
-          this.loading = true;
-          PizzaService.get()
-            .then(({ data: { pizzas } }) => {
-              this.pizzas = pizzas;
-            })
-            .catch(() => {
-              this.didGetPizzasFailed = true;
+      if (pizza.id) {
+        PizzaService.update(pizza)
+          .then(() => {
+            this.showPizza = false;
+            this.$bvToast.toast(
+              notifications.PizzaService.update.message.success,
+              {
+                ...notifications.config,
+                title: notifications.defaults.title.success,
+                variant: "success"
+              }
+            );
+            this.getPizzas();
+          })
+          .catch(({ response }) => {
+            if (response.status === 500) {
               this.$bvToast.toast(notifications.defaults.message.error, {
                 ...notifications.config,
                 title: notifications.defaults.title.error,
                 variant: "danger"
               });
-            })
-            .finally(() => {
-              this.loading = false;
-            });
-        })
-        .catch(({ response }) => {
-          if (response.status === 500) {
+            } else if (response.status === 409) {
+              this.$bvToast.toast(response.data.error.message, {
+                ...notifications.config,
+                title: notifications.defaults.title.error,
+                variant: "danger"
+              });
+            }
+          })
+          .catch(() => {
             this.$bvToast.toast(notifications.defaults.message.error, {
               ...notifications.config,
               title: notifications.defaults.title.error,
               variant: "danger"
             });
-          } else if (response.status === 409) {
-            this.$bvToast.toast(response.data.error.message, {
+          })
+          .finally(() => {
+            this.loadingPizzaForm = false;
+          });
+      } else {
+        PizzaService.create(pizza)
+          .then(() => {
+            this.showPizza = false;
+            this.$bvToast.toast(
+              notifications.PizzaService.create.message.success,
+              {
+                ...notifications.config,
+                title: notifications.defaults.title.success,
+                variant: "success"
+              }
+            );
+            this.getPizzas();
+          })
+          .catch(({ response }) => {
+            if (response.status === 500) {
+              this.$bvToast.toast(notifications.defaults.message.error, {
+                ...notifications.config,
+                title: notifications.defaults.title.error,
+                variant: "danger"
+              });
+            } else if (response.status === 409) {
+              this.$bvToast.toast(response.data.error.message, {
+                ...notifications.config,
+                title: notifications.defaults.title.error,
+                variant: "danger"
+              });
+            }
+          })
+          .catch(() => {
+            this.$bvToast.toast(notifications.defaults.message.error, {
               ...notifications.config,
               title: notifications.defaults.title.error,
               variant: "danger"
             });
-          }
-        })
-        .catch(() => {
-          this.$bvToast.toast(notifications.defaults.message.error, {
-            ...notifications.config,
-            title: notifications.defaults.title.error,
-            variant: "danger"
+          })
+          .finally(() => {
+            this.loadingPizzaForm = false;
           });
-        })
-        .finally(() => {
-          this.loadingPizzaForm = false;
-        });
+      }
     },
     handleDelete(pizza) {
       const message = `Pizza ${pizza.name}. Tem certeza?`;
@@ -152,30 +196,40 @@ export default {
         })
         .then(response => {
           if (response) {
-            // delete pizza
+            PizzaService.remove(pizza)
+              .then(() => {
+                this.$bvToast.toast(
+                  notifications.PizzaService.remove.message.success,
+                  {
+                    ...notifications.config,
+                    title: notifications.defaults.title.success,
+                    variant: "success"
+                  }
+                );
+                this.getPizzas();
+              })
+              .catch(({ response }) => {
+                if (response.status === 500) {
+                  this.$bvToast.toast(notifications.defaults.message.error, {
+                    ...notifications.config,
+                    title: notifications.defaults.title.error,
+                    variant: "danger"
+                  });
+                }
+              })
+              .catch(() => {
+                this.$bvToast.toast(notifications.defaults.message.error, {
+                  ...notifications.config,
+                  title: notifications.defaults.title.error,
+                  variant: "danger"
+                });
+              });
           }
-          console.log(response);
         });
-      console.log(pizza);
     }
   },
   mounted() {
-    this.loading = true;
-    PizzaService.get()
-      .then(({ data: { pizzas } }) => {
-        this.pizzas = pizzas;
-      })
-      .catch(() => {
-        this.didGetPizzasFailed = true;
-        this.$bvToast.toast(notifications.defaults.message.error, {
-          ...notifications.config,
-          title: notifications.defaults.title.error,
-          variant: "danger"
-        });
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    this.getPizzas();
   }
 };
 </script>
