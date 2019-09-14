@@ -1,7 +1,8 @@
 import Axios from "axios";
 
 function get() {
-  return Axios.get("http://www.mocky.io/v2/5d6c26b43300006200346d38");
+  // return Axios.get("http://www.mocky.io/v2/5d6c26b43300006200346d38"); // 200
+  return Axios.get("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
 }
 
 function create(pizza) {

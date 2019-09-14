@@ -99,6 +99,13 @@ export default {
             .then(({ data: { pizzas } }) => {
               this.pizzas = pizzas;
             })
+            .catch(() => {
+              this.$bvToast.toast(notifications.defaults.message.error, {
+                ...notifications.config,
+                title: notifications.defaults.title.error,
+                variant: "danger"
+              });
+            })
             .finally(() => {
               this.loading = false;
             });
@@ -149,8 +156,15 @@ export default {
   mounted() {
     this.loading = true;
     PizzaService.get()
-      .then(response => {
-        this.pizzas = response.data.pizzas;
+      .then(({ data: { pizzas } }) => {
+        this.pizzas = pizzas;
+      })
+      .catch(() => {
+        this.$bvToast.toast(notifications.defaults.message.error, {
+          ...notifications.config,
+          title: notifications.defaults.title.error,
+          variant: "danger"
+        });
       })
       .finally(() => {
         this.loading = false;
