@@ -32,7 +32,11 @@
                 :title="showPizzaModalTitle"
                 v-model="showPizza"
               >
-                <PizzaForm :pizza="pizza" @submit="handleSave" />
+                <PizzaForm
+                  :pizza="pizza"
+                  @submit="handleSave"
+                  :loading="loadingPizzaForm"
+                />
               </b-modal>
             </template>
           </b-col>
@@ -58,6 +62,7 @@ export default {
   data() {
     return {
       loading: false,
+      loadingPizzaForm: false,
       showPizza: false,
       showPizzaModalTitle: "",
       pizza: {},
@@ -76,10 +81,9 @@ export default {
       this.showPizzaModalTitle = "Adicionar pizza";
     },
     handleSave(pizza) {
-      this.loading = true;
+      this.loadingPizzaForm = true;
       console.log("Valid!");
       console.log(pizza);
-      this.loading = false;
     },
     handleDelete(pizza) {
       const message = `Pizza ${pizza.name}. Tem certeza?`;

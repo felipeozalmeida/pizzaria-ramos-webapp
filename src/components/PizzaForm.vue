@@ -80,7 +80,16 @@
         <b-form-invalid-feedback>Obrigatório</b-form-invalid-feedback>
       </b-form-group>
       <div class="d-flex justify-content-end">
-        <b-button type="submit" variant="primary">Salvar</b-button>
+        <b-button type="submit" variant="primary" :disabled="loading">
+          <template v-if="loading">
+            <div class="d-flex align-items-center">
+              <b-spinner small class="mr-2" /> Carregando...
+            </div>
+          </template>
+          <template v-else>
+            Salvar
+          </template>
+        </b-button>
       </div>
     </b-form>
   </div>
@@ -90,6 +99,7 @@
 export default {
   name: "PizzaForm",
   props: {
+    loading: Boolean,
     pizza: Object
   },
   data() {
