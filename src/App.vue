@@ -85,6 +85,12 @@ export default {
       PizzaService.create(pizza)
         .then(() => {
           this.showPizza = false;
+          this.$bvToast.toast(`Pizza adicionada com sucesso!`, {
+            toaster: "b-toaster-bottom-center",
+            title: "Sucesso!",
+            variant: "success",
+            solid: true
+          });
           this.loading = true;
           PizzaService.get()
             .then(({ data: { pizzas } }) => {
