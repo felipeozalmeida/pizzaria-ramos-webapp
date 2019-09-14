@@ -208,11 +208,51 @@ export default {
         })
         .then(response => {
           if (response) {
-            // delete pizza
+            PizzaService.remove(pizza)
+              .then(() => {
+                this.$bvToast.toast(
+                  notifications.PizzaService.remove.message.success,
+                  {
+                    ...notifications.config,
+                    title: notifications.defaults.title.success,
+                    variant: "success"
+                  }
+                );
+                this.loading = true;
+                PizzaService.get()
+                  .then(({ data: { pizzas } }) => {
+                    this.pizzas = pizzas;
+                  })
+                  .catch(() => {
+                    this.didGetPizzasFailed = true;
+                    this.$bvToast.toast(notifications.defaults.message.error, {
+                      ...notifications.config,
+                      title: notifications.defaults.title.error,
+                      variant: "danger"
+                    });
+                  })
+                  .finally(() => {
+                    this.loading = false;
+                  });
+              })
+              .catch(({ response }) => {
+                if (response.status === 500) {
+                  this.$bvToast.toast(notifications.defaults.message.error, {
+                    ...notifications.config,
+                    title: notifications.defaults.title.error,
+                    variant: "danger"
+                  });
+                }
+              })
+              .catch(() => {
+                this.$bvToast.toast(notifications.defaults.message.error, {
+                  ...notifications.config,
+                  title: notifications.defaults.title.error,
+                  variant: "danger"
+                });
+              });
           }
-          console.log(response);
         });
-      console.log(pizza);
     }
   },
   mounted() {
