@@ -1,0 +1,5 @@
+{
+  "error": {
+    "message": "Já existe uma pizza com este nome."
+  }
+}

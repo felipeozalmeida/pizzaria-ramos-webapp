@@ -16,7 +16,11 @@
               <b-row>
                 <b-col>
                   <div class="d-flex justify-content-end mb-3">
-                    <b-button variant="success" @click="handleCreate">
+                    <b-button
+                      variant="success"
+                      @click="handleCreate"
+                      :disabled="didGetPizzasFailed"
+                    >
                       <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
                     </b-button>
                   </div>
@@ -32,7 +36,11 @@
                 :title="showPizzaModalTitle"
                 v-model="showPizza"
               >
-                <PizzaForm :pizza="pizza" @submit="handleSave" />
+                <PizzaForm
+                  :pizza="pizza"
+                  @submit="handleSave"
+                  :loading="loadingPizzaForm"
+                />
               </b-modal>
             </template>
           </b-col>
@@ -47,6 +55,7 @@ import PizzaService from "./services/pizza.service";
 import BaseSpinner from "./components/BaseSpinner";
 import PizzaList from "./components/PizzaList";
 import PizzaForm from "./components/PizzaForm";
+import notifications from "./helpers/notifications";
 
 export default {
   name: "app",
@@ -57,14 +66,34 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      showPizza: false,
-      showPizzaModalTitle: "",
       pizza: {},
-      pizzas: []
+      pizzas: [],
+      loading: false,
+      loadingPizzaForm: false,
+      didGetPizzasFailed: false,
+      showPizza: false,
+      showPizzaModalTitle: ""
     };
   },
   methods: {
+    getPizzas() {
+      this.loading = true;
+      PizzaService.get()
+        .then(({ data: { pizzas } }) => {
+          this.pizzas = pizzas;
+        })
+        .catch(() => {
+          this.didGetPizzasFailed = true;
+          this.$bvToast.toast(notifications.defaults.message.error, {
+            ...notifications.config,
+            title: notifications.defaults.title.error,
+            variant: "danger"
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     handleView(pizza) {
       this.pizza = pizza;
       this.showPizza = true;
@@ -76,24 +105,131 @@ export default {
       this.showPizzaModalTitle = "Adicionar pizza";
     },
     handleSave(pizza) {
-      this.loading = true;
-      console.log("Valid!");
-      console.log(pizza);
-      this.loading = false;
+      this.loadingPizzaForm = true;
+      if (pizza.id) {
+        PizzaService.update(pizza)
+          .then(() => {
+            this.showPizza = false;
+            this.$bvToast.toast(
+              notifications.PizzaService.update.message.success,
+              {
+                ...notifications.config,
+                title: notifications.defaults.title.success,
+                variant: "success"
+              }
+            );
+            this.getPizzas();
+          })
+          .catch(({ response }) => {
+            if (response.status === 500) {
+              this.$bvToast.toast(notifications.defaults.message.error, {
+                ...notifications.config,
+                title: notifications.defaults.title.error,
+                variant: "danger"
+              });
+            } else if (response.status === 409) {
+              this.$bvToast.toast(response.data.error.message, {
+                ...notifications.config,
+                title: notifications.defaults.title.error,
+                variant: "danger"
+              });
+            }
+          })
+          .catch(() => {
+            this.$bvToast.toast(notifications.defaults.message.error, {
+              ...notifications.config,
+              title: notifications.defaults.title.error,
+              variant: "danger"
+            });
+          })
+          .finally(() => {
+            this.loadingPizzaForm = false;
+          });
+      } else {
+        PizzaService.create(pizza)
+          .then(() => {
+            this.showPizza = false;
+            this.$bvToast.toast(
+              notifications.PizzaService.create.message.success,
+              {
+                ...notifications.config,
+                title: notifications.defaults.title.success,
+                variant: "success"
+              }
+            );
+            this.getPizzas();
+          })
+          .catch(({ response }) => {
+            if (response.status === 500) {
+              this.$bvToast.toast(notifications.defaults.message.error, {
+                ...notifications.config,
+                title: notifications.defaults.title.error,
+                variant: "danger"
+              });
+            } else if (response.status === 409) {
+              this.$bvToast.toast(response.data.error.message, {
+                ...notifications.config,
+                title: notifications.defaults.title.error,
+                variant: "danger"
+              });
+            }
+          })
+          .catch(() => {
+            this.$bvToast.toast(notifications.defaults.message.error, {
+              ...notifications.config,
+              title: notifications.defaults.title.error,
+              variant: "danger"
+            });
+          })
+          .finally(() => {
+            this.loadingPizzaForm = false;
+          });
+      }
     },
     handleDelete(pizza) {
-      console.log(pizza);
+      const message = `Pizza ${pizza.name}. Tem certeza?`;
+      this.$bvModal
+        .msgBoxConfirm(message, {
+          title: "Excluir pizza",
+          okTitle: "Sim",
+          cancelTitle: "Não"
+        })
+        .then(response => {
+          if (response) {
+            PizzaService.remove(pizza)
+              .then(() => {
+                this.$bvToast.toast(
+                  notifications.PizzaService.remove.message.success,
+                  {
+                    ...notifications.config,
+                    title: notifications.defaults.title.success,
+                    variant: "success"
+                  }
+                );
+                this.getPizzas();
+              })
+              .catch(({ response }) => {
+                if (response.status === 500) {
+                  this.$bvToast.toast(notifications.defaults.message.error, {
+                    ...notifications.config,
+                    title: notifications.defaults.title.error,
+                    variant: "danger"
+                  });
+                }
+              })
+              .catch(() => {
+                this.$bvToast.toast(notifications.defaults.message.error, {
+                  ...notifications.config,
+                  title: notifications.defaults.title.error,
+                  variant: "danger"
+                });
+              });
+          }
+        });
     }
   },
   mounted() {
-    this.loading = true;
-    PizzaService.get()
-      .then(response => {
-        this.pizzas = response.data.pizzas;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    this.getPizzas();
   }
 };
 </script>
