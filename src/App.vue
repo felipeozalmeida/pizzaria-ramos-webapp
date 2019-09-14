@@ -82,8 +82,24 @@ export default {
     },
     handleSave(pizza) {
       this.loadingPizzaForm = true;
-      console.log("Valid!");
-      console.log(pizza);
+      PizzaService.create(pizza)
+        .then(() => {
+          this.showPizza = false;
+          this.loading = true;
+          PizzaService.get()
+            .then(({ data: { pizzas } }) => {
+              this.pizzas = pizzas;
+            })
+            .finally(() => {
+              this.loading = false;
+            });
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.loadingPizzaForm = false;
+        });
     },
     handleDelete(pizza) {
       const message = `Pizza ${pizza.name}. Tem certeza?`;
