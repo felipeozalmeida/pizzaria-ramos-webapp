@@ -22,7 +22,10 @@ function create(pizza) {
 }
 
 function update(pizza) {
-  return Axios.put("http://www.mocky.io/v2/5d7525043100007e2f9505a7", pizza); // 204
+  return Axios.put(
+    "http://www.mocky.io/v2/5d7525043100007e2f9505a7",
+    convertToFormData(pizza)
+  ); // 204
   // return Axios.put("http://www.mocky.io/v2/5d75226d310000a61e9505a1"); // 409
   // return Axios.put("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
 }
