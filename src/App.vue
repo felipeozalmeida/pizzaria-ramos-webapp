@@ -51,6 +51,7 @@ import PizzaService from "./services/pizza.service";
 import BaseSpinner from "./components/BaseSpinner";
 import PizzaList from "./components/PizzaList";
 import PizzaForm from "./components/PizzaForm";
+import notifications from "./helpers/notifications";
 
 export default {
   name: "app",
@@ -85,12 +86,15 @@ export default {
       PizzaService.create(pizza)
         .then(() => {
           this.showPizza = false;
-          this.$bvToast.toast(`Pizza adicionada com sucesso!`, {
-            toaster: "b-toaster-bottom-center",
-            title: "Sucesso!",
-            variant: "success",
-            solid: true
-          });
+          this.$bvToast.toast(
+            notifications.PizzaService.create.message.success,
+            {
+              toaster: "b-toaster-bottom-center",
+              title: notifications.defaults.title.success,
+              variant: "success",
+              solid: true
+            }
+          );
           this.loading = true;
           PizzaService.get()
             .then(({ data: { pizzas } }) => {
