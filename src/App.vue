@@ -8,6 +8,20 @@
             <BaseSpinner v-show="loading" />
             <template v-if="!loading">
               <b-row>
+                <b-col cols="10">
+                  <b-form-group
+                    id="pizzaSearchFormGroup"
+                    label="Pesquisar sabor:"
+                    label-for="pizzaSearchInput"
+                    label-sr-only
+                  >
+                    <b-form-input
+                      id="pizzaSearchInput"
+                      placeholder="Ex.: calabresa, escarola..."
+                      v-model="pizzaSearchText"
+                    />
+                  </b-form-group>
+                </b-col>
                 <b-col>
                   <div class="d-flex justify-content-end mb-3">
                     <b-button
@@ -21,7 +35,7 @@
                 </b-col>
               </b-row>
               <PizzaList
-                :pizzas="pizzas"
+                :pizzas="filteredPizzas"
                 @view="handleView"
                 @delete="handleDelete"
               />
@@ -68,8 +82,16 @@ export default {
       loadingPizzaForm: false,
       didGetPizzasFailed: false,
       showPizza: false,
-      showPizzaModalTitle: ""
+      showPizzaModalTitle: "",
+      pizzaSearchText: ""
     };
+  },
+  computed: {
+    filteredPizzas() {
+      return this.pizzas.filter(pizza => {
+        return pizza.name.toLowerCase().includes(this.pizzaSearchText);
+      });
+    }
   },
   methods: {
     getPizzas() {
