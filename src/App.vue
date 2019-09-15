@@ -61,8 +61,7 @@ export default {
       loadingPizzaForm: false,
       didGetPizzasFailed: false,
       showPizza: false,
-      showPizzaModalTitle: "",
-      pizzaSearchText: ""
+      showPizzaModalTitle: ""
     };
   },
   methods: {
