@@ -7,31 +7,39 @@
           <b-col>
             <BaseSpinner v-show="loading" />
             <template v-if="!loading">
-              <b-row>
-                <b-col cols="10">
-                  <b-form-group
-                    id="pizzaSearchFormGroup"
-                    label="Pesquisar sabor:"
-                    label-for="pizzaSearchInput"
-                    label-sr-only
-                  >
-                    <b-form-input
-                      id="pizzaSearchInput"
-                      placeholder="Ex.: calabresa, escarola..."
-                      v-model="pizzaSearchText"
-                    />
-                  </b-form-group>
-                </b-col>
-                <b-col>
-                  <div class="d-flex justify-content-end mb-3">
-                    <b-button
-                      variant="success"
-                      @click="handleCreate"
-                      :disabled="didGetPizzasFailed"
+              <b-row class="mb-3">
+                <b-col
+                  class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center"
+                >
+                  <div class="d-flex flex-fill">
+                    <b-form-group
+                      class="flex-fill mb-2 mb-lg-0 mr-2"
+                      id="pizzaSearchFormGroup"
+                      label="Pesquisar sabor:"
+                      label-for="pizzaSearchInput"
+                      label-sr-only
                     >
-                      <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
+                      <b-form-input
+                        id="pizzaSearchInput"
+                        placeholder="Ex.: calabresa, escarola..."
+                        v-model="pizzaSearchText"
+                      />
+                    </b-form-group>
+                    <b-button class="mb-2 mb-lg-0 mr-lg-2" variant="info">
+                      <font-awesome-icon :icon="['fas', 'plus']" />
+                      <span class="d-none d-lg-inline-block"
+                        >&nbsp;Pesquisar</span
+                      >
                     </b-button>
                   </div>
+                  <b-button
+                    class="mb-lg-0"
+                    variant="success"
+                    @click="handleCreate"
+                    :disabled="didGetPizzasFailed"
+                  >
+                    <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
+                  </b-button>
                 </b-col>
               </b-row>
               <PizzaList
