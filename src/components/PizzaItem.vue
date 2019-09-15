@@ -55,7 +55,6 @@ export default {
 .PizzaItem {
   text-shadow: 0.0625rem 0.0625rem 0.625rem #000;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
-  transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
 
   &__img {
     filter: brightness(0.75);
@@ -68,8 +67,11 @@ export default {
     display: block;
     margin-left: -0.125rem;
     margin-right: -0.125rem;
-    opacity: 0;
-    transition: opacity 0.15s ease-in-out;
+
+    @media (min-width: 992px) {
+      opacity: 0;
+      transition: opacity 0.15s ease-in-out;
+    }
   }
 
   &__button {
@@ -77,13 +79,17 @@ export default {
     margin-right: 0.125rem;
   }
 
-  &:hover {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
-    transform: scale(1.025);
-  }
+  @media (min-width: 992px) {
+    transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
 
-  &:hover &__toolbar {
-    opacity: 1;
+    &:hover {
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+      transform: scale(1.025);
+    }
+
+    &:hover &__toolbar {
+      opacity: 1;
+    }
   }
 }
 </style>
