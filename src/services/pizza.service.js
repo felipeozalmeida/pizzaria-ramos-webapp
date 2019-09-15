@@ -12,8 +12,8 @@ function get() {
   // return Axios.get("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
 }
 
-function search(name) {
-  return Axios.post("http://www.mocky.io/v2/5d7d87c62f00006d1dfedf61", name); // 200
+function search(search) {
+  return Axios.post("http://www.mocky.io/v2/5d7d87c62f00006d1dfedf61", search); // 200
   // return Axios.get("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
 }
 
