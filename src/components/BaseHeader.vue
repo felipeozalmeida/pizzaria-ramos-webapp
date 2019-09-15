@@ -2,7 +2,7 @@
   <header class="BaseHeader">
     <b-jumbotron
       fluid
-      class="BaseHeader__jumbotron"
+      class="BaseHeader__jumbotron text-break"
       header="Pizzaria Ramos"
       lead="Atendendo a seus pedidos, sempre!"
       text-variant="white"

@@ -5,6 +5,7 @@
       <b-container>
         <b-row>
           <b-col>
+            <h2 class="sr-only">Pizzas</h2>
             <PizzaToolbar
               @search="handleSearch"
               @reset="handleReset"
