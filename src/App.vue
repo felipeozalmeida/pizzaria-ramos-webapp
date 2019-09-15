@@ -5,38 +5,29 @@
       <b-container>
         <b-row>
           <b-col>
+            <PizzaToolbar
+              @search="handleSearch"
+              @reset="handleReset"
+              @create="handleCreate"
+            />
             <BaseSpinner v-show="loading" />
-            <template v-if="!loading">
-              <b-row>
-                <b-col>
-                  <div class="d-flex justify-content-end mb-3">
-                    <b-button
-                      variant="success"
-                      @click="handleCreate"
-                      :disabled="didGetPizzasFailed"
-                    >
-                      <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
-                    </b-button>
-                  </div>
-                </b-col>
-              </b-row>
-              <PizzaList
-                :pizzas="pizzas"
-                @view="handleView"
-                @delete="handleDelete"
+            <PizzaList
+              :pizzas="pizzas"
+              @view="handleView"
+              @delete="handleDelete"
+              v-show="!loading"
+            />
+            <b-modal
+              hide-footer
+              :title="showPizzaModalTitle"
+              v-model="showPizza"
+            >
+              <PizzaForm
+                :pizza="pizza"
+                @submit="handleSave"
+                :loading="loadingPizzaForm"
               />
-              <b-modal
-                hide-footer
-                :title="showPizzaModalTitle"
-                v-model="showPizza"
-              >
-                <PizzaForm
-                  :pizza="pizza"
-                  @submit="handleSave"
-                  :loading="loadingPizzaForm"
-                />
-              </b-modal>
-            </template>
+            </b-modal>
           </b-col>
         </b-row>
       </b-container>
@@ -48,6 +39,7 @@
 import PizzaService from "./services/pizza.service";
 import BaseHeader from "./components/BaseHeader";
 import BaseSpinner from "./components/BaseSpinner";
+import PizzaToolbar from "./components/PizzaToolbar";
 import PizzaList from "./components/PizzaList";
 import PizzaForm from "./components/PizzaForm";
 import notifications from "./helpers/notifications";
@@ -57,6 +49,7 @@ export default {
   components: {
     BaseHeader,
     BaseSpinner,
+    PizzaToolbar,
     PizzaList,
     PizzaForm
   },
@@ -94,6 +87,26 @@ export default {
       this.pizza = pizza;
       this.showPizza = true;
       this.showPizzaModalTitle = "Visualizar pizza";
+    },
+    handleSearch(search) {
+      this.loading = true;
+      PizzaService.search(search)
+        .then(({ data: { pizzas } }) => {
+          this.pizzas = pizzas;
+        })
+        .catch(() => {
+          this.$bvToast.toast(notifications.defaults.message.error, {
+            ...notifications.config,
+            title: notifications.defaults.title.error,
+            variant: "danger"
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    handleReset() {
+      this.getPizzas();
     },
     handleCreate() {
       this.pizza = {};
