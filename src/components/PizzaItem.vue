@@ -7,8 +7,14 @@
         :alt="pizza.image.alt"
       />
       <b-card-body overlay body-text-variant="white">
-        <b-card-title>{{ pizza.name }}</b-card-title>
-        <b-card-sub-title sub-title-text-variant="white">
+        <b-card-title class="PizzaItem__title" title-tag="h3">{{
+          pizza.name
+        }}</b-card-title>
+        <b-card-sub-title
+          class="PizzaItem__subtitle"
+          sub-title-tag="h4"
+          sub-title-text-variant="white"
+        >
           R$ {{ pizza.price }}
         </b-card-sub-title>
         <div class="PizzaItem__toolbar">
@@ -58,6 +64,18 @@ export default {
 
   &__img {
     filter: brightness(0.75);
+  }
+
+  &__title {
+    font-size: 1.25rem;
+
+    @media (min-width: 576px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1rem;
   }
 
   &__toolbar {
