@@ -12,6 +12,11 @@ function get() {
   // return Axios.get("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
 }
 
+function find(name) {
+  return Axios.post("http://www.mocky.io/v2/5d7d87c62f00006d1dfedf61", name); // 200
+  // return Axios.get("http://www.mocky.io/v2/5d7522bf310000b4229505a3"); // 500
+}
+
 function create(pizza) {
   return Axios.post(
     "http://www.mocky.io/v2/5d751d0f310000d82b95059a",
@@ -37,6 +42,7 @@ function remove(pizza) {
 
 export default {
   get,
+  find,
   create,
   update,
   remove
