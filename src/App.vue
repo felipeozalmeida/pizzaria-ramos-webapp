@@ -5,60 +5,29 @@
       <b-container>
         <b-row>
           <b-col>
+            <PizzaToolbar
+              @search="handleSearch"
+              @reset="handleReset"
+              @create="handleCreate"
+            />
             <BaseSpinner v-show="loading" />
-            <template v-if="!loading">
-              <b-row class="mb-3">
-                <b-col
-                  class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center"
-                >
-                  <div class="d-flex flex-fill">
-                    <b-form-group
-                      class="flex-fill mb-2 mb-lg-0 mr-2"
-                      id="pizzaSearchFormGroup"
-                      label="Pesquisar sabor:"
-                      label-for="pizzaSearchInput"
-                      label-sr-only
-                    >
-                      <b-form-input
-                        id="pizzaSearchInput"
-                        placeholder="Ex.: calabresa, escarola..."
-                        v-model="pizzaSearchText"
-                      />
-                    </b-form-group>
-                    <b-button class="mb-2 mb-lg-0 mr-lg-2" variant="info">
-                      <font-awesome-icon :icon="['fas', 'plus']" />
-                      <span class="d-none d-lg-inline-block"
-                        >&nbsp;Pesquisar</span
-                      >
-                    </b-button>
-                  </div>
-                  <b-button
-                    class="mb-lg-0"
-                    variant="success"
-                    @click="handleCreate"
-                    :disabled="didGetPizzasFailed"
-                  >
-                    <font-awesome-icon :icon="['fas', 'plus']" /> Adicionar
-                  </b-button>
-                </b-col>
-              </b-row>
-              <PizzaList
-                :pizzas="filteredPizzas"
-                @view="handleView"
-                @delete="handleDelete"
+            <PizzaList
+              :pizzas="pizzas"
+              @view="handleView"
+              @delete="handleDelete"
+              v-show="!loading"
+            />
+            <b-modal
+              hide-footer
+              :title="showPizzaModalTitle"
+              v-model="showPizza"
+            >
+              <PizzaForm
+                :pizza="pizza"
+                @submit="handleSave"
+                :loading="loadingPizzaForm"
               />
-              <b-modal
-                hide-footer
-                :title="showPizzaModalTitle"
-                v-model="showPizza"
-              >
-                <PizzaForm
-                  :pizza="pizza"
-                  @submit="handleSave"
-                  :loading="loadingPizzaForm"
-                />
-              </b-modal>
-            </template>
+            </b-modal>
           </b-col>
         </b-row>
       </b-container>
@@ -70,6 +39,7 @@
 import PizzaService from "./services/pizza.service";
 import BaseHeader from "./components/BaseHeader";
 import BaseSpinner from "./components/BaseSpinner";
+import PizzaToolbar from "./components/PizzaToolbar";
 import PizzaList from "./components/PizzaList";
 import PizzaForm from "./components/PizzaForm";
 import notifications from "./helpers/notifications";
@@ -79,6 +49,7 @@ export default {
   components: {
     BaseHeader,
     BaseSpinner,
+    PizzaToolbar,
     PizzaList,
     PizzaForm
   },
@@ -93,13 +64,6 @@ export default {
       showPizzaModalTitle: "",
       pizzaSearchText: ""
     };
-  },
-  computed: {
-    filteredPizzas() {
-      return this.pizzas.filter(pizza => {
-        return pizza.name.toLowerCase().includes(this.pizzaSearchText);
-      });
-    }
   },
   methods: {
     getPizzas() {
@@ -124,6 +88,26 @@ export default {
       this.pizza = pizza;
       this.showPizza = true;
       this.showPizzaModalTitle = "Visualizar pizza";
+    },
+    handleSearch(search) {
+      this.loading = true;
+      PizzaService.search(search)
+        .then(({ data: { pizzas } }) => {
+          this.pizzas = pizzas;
+        })
+        .catch(() => {
+          this.$bvToast.toast(notifications.defaults.message.error, {
+            ...notifications.config,
+            title: notifications.defaults.title.error,
+            variant: "danger"
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    handleReset() {
+      this.getPizzas();
     },
     handleCreate() {
       this.pizza = {};

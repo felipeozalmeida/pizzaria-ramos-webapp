@@ -8,9 +8,20 @@ import {
   faTrash,
   faPlus,
   faCheck,
-  faTimes
+  faTimes,
+  faSearch,
+  faBackspace
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faCircleNotch, faPen, faTrash, faPlus, faCheck, faTimes);
+library.add(
+  faCircleNotch,
+  faPen,
+  faTrash,
+  faPlus,
+  faCheck,
+  faTimes,
+  faSearch,
+  faBackspace
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
