@@ -7,8 +7,14 @@
         :alt="pizza.image.alt"
       />
       <b-card-body overlay body-text-variant="white">
-        <b-card-title>{{ pizza.name }}</b-card-title>
-        <b-card-sub-title sub-title-text-variant="white">
+        <b-card-title class="PizzaItem__title" title-tag="h3">{{
+          pizza.name
+        }}</b-card-title>
+        <b-card-sub-title
+          class="PizzaItem__subtitle"
+          sub-title-tag="h4"
+          sub-title-text-variant="white"
+        >
           R$ {{ pizza.price }}
         </b-card-sub-title>
         <div class="PizzaItem__toolbar">
@@ -55,10 +61,21 @@ export default {
 .PizzaItem {
   text-shadow: 0.0625rem 0.0625rem 0.625rem #000;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
-  transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
 
   &__img {
     filter: brightness(0.75);
+  }
+
+  &__title {
+    font-size: 1.25rem;
+
+    @media (min-width: 576px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1rem;
   }
 
   &__toolbar {
@@ -68,8 +85,11 @@ export default {
     display: block;
     margin-left: -0.125rem;
     margin-right: -0.125rem;
-    opacity: 0;
-    transition: opacity 0.15s ease-in-out;
+
+    @media (min-width: 992px) {
+      opacity: 0;
+      transition: opacity 0.15s ease-in-out;
+    }
   }
 
   &__button {
@@ -77,13 +97,17 @@ export default {
     margin-right: 0.125rem;
   }
 
-  &:hover {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
-    transform: scale(1.025);
-  }
+  @media (min-width: 992px) {
+    transition: box-shadow 0.15s ease-in-out, transform 0.15s ease-in-out;
 
-  &:hover &__toolbar {
-    opacity: 1;
+    &:hover {
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+      transform: scale(1.025);
+    }
+
+    &:hover &__toolbar {
+      opacity: 1;
+    }
   }
 }
 </style>
