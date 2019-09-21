@@ -1,0 +1,14 @@
+{
+  "pizzas": [
+    {
+      "id": 4,
+      "name": "Portuguesa",
+      "ingredients": "Molho de tomate, presunto e queijo.",
+      "price": 22.0,
+      "image": {
+        "src": "https://picsum.photos/200",
+        "alt": "Pizza sabor portuguesa."
+      }
+    }
+  ]
+}
