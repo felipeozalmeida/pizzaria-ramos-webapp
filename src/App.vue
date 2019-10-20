@@ -68,9 +68,9 @@ export default {
   methods: {
     getPizzas() {
       this.loading = true;
-      PizzaService.get()
-        .then(({ data: { pizzas } }) => {
-          this.pizzas = pizzas;
+      PizzaService.list()
+        .then(({ data }) => {
+          this.pizzas = data;
         })
         .catch(() => {
           this.didGetPizzasFailed = true;
@@ -114,10 +114,10 @@ export default {
       this.showPizza = true;
       this.showPizzaModalTitle = "Adicionar pizza";
     },
-    handleSave(pizza) {
+    handleSave(pizzaFormData) {
       this.loadingPizzaForm = true;
-      if (pizza.id) {
-        PizzaService.update(pizza)
+      if (this.pizza.id) {
+        PizzaService.update(this.pizza.id, pizzaFormData)
           .then(() => {
             this.showPizza = false;
             this.$bvToast.toast(
@@ -156,7 +156,7 @@ export default {
             this.loadingPizzaForm = false;
           });
       } else {
-        PizzaService.create(pizza)
+        PizzaService.create(pizzaFormData)
           .then(() => {
             this.showPizza = false;
             this.$bvToast.toast(
@@ -206,7 +206,7 @@ export default {
         })
         .then(response => {
           if (response) {
-            PizzaService.remove(pizza)
+            PizzaService.delete(pizza.id)
               .then(() => {
                 this.$bvToast.toast(
                   notifications.PizzaService.remove.message.success,
