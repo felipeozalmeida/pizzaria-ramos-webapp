@@ -13,6 +13,11 @@ export default {
     }
   },
   PizzaService: {
+    defaults: {
+      message: {
+        error: "Já existe uma pizza com estes dados!"
+      }
+    },
     create: {
       message: {
         success: "Pizza adicionada com sucesso!"
@@ -23,7 +28,7 @@ export default {
         success: "Pizza atualizada com sucesso!"
       }
     },
-    remove: {
+    delete: {
       message: {
         success: "Pizza removida com sucesso!"
       }

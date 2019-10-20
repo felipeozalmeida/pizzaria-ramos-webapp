@@ -137,13 +137,17 @@ export default {
                 title: notifications.defaults.title.error,
                 variant: "danger"
               });
-            } else if (response.status === 409) {
-              this.$bvToast.toast(response.data.error.message, {
-                ...notifications.config,
-                title: notifications.defaults.title.error,
-                variant: "danger"
-              });
+            } else if (response.status === 400) {
+              this.$bvToast.toast(
+                notifications.PizzaService.defaults.message.error,
+                {
+                  ...notifications.config,
+                  title: notifications.defaults.title.error,
+                  variant: "danger"
+                }
+              );
             }
+            // TODO: add new error message for status code 404
           })
           .catch(() => {
             this.$bvToast.toast(notifications.defaults.message.error, {
@@ -176,13 +180,17 @@ export default {
                 title: notifications.defaults.title.error,
                 variant: "danger"
               });
-            } else if (response.status === 409) {
-              this.$bvToast.toast(response.data.error.message, {
-                ...notifications.config,
-                title: notifications.defaults.title.error,
-                variant: "danger"
-              });
+            } else if (response.status === 400) {
+              this.$bvToast.toast(
+                notifications.PizzaService.defaults.message.error,
+                {
+                  ...notifications.config,
+                  title: notifications.defaults.title.error,
+                  variant: "danger"
+                }
+              );
             }
+            // TODO: add new error message for status code 404
           })
           .catch(() => {
             this.$bvToast.toast(notifications.defaults.message.error, {
@@ -209,7 +217,7 @@ export default {
             PizzaService.delete(pizza.id)
               .then(() => {
                 this.$bvToast.toast(
-                  notifications.PizzaService.remove.message.success,
+                  notifications.PizzaService.delete.message.success,
                   {
                     ...notifications.config,
                     title: notifications.defaults.title.success,
@@ -226,6 +234,7 @@ export default {
                     variant: "danger"
                   });
                 }
+                // TODO: add new error message for status code 404
               })
               .catch(() => {
                 this.$bvToast.toast(notifications.defaults.message.error, {
