@@ -31,6 +31,20 @@
           @onChange="handleImageFileChange"
         />
       </b-form-group>
+      <b-form-group
+        id="pizzaImageTextInputGroup"
+        label="Texto da imagem:"
+        label-for="pizzaImageTextInput"
+      >
+        <b-form-input
+          maxlength="140"
+          placeholder="Ex.: Pizza sabor calabresa dentro de um forno..."
+          id="pizzaImageTextInput"
+          :value="pizza.image_text"
+          @change="handleImageTextChange"
+        />
+        <b-form-invalid-feedback>Obrigatório</b-form-invalid-feedback>
+      </b-form-group>
       <b-form-row>
         <b-col cols="9">
           <b-form-group
