@@ -3,8 +3,8 @@
     <b-card class="border-0" no-body>
       <b-card-img-lazy
         class="PizzaItem__img"
-        :src="pizza.image.src"
-        :alt="pizza.image.alt"
+        :src="pizza.image_file"
+        :alt="pizza.image_alt"
       />
       <b-card-body overlay body-text-variant="white">
         <b-card-title class="PizzaItem__title" title-tag="h3">{{

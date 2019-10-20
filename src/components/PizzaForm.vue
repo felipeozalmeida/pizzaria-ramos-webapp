@@ -27,9 +27,23 @@
           exceed-size-text="Tamanho do arquivo deve ser menor que "
           id="pizzaImageInput"
           :max-size="2048"
-          :img-src="formData.imageUrl"
-          v-model="formData.imageFile"
+          :img-src="pizza.image_file"
+          @onChange="handleImageFileChange"
         />
+      </b-form-group>
+      <b-form-group
+        id="pizzaImageTextInputGroup"
+        label="Texto da imagem:"
+        label-for="pizzaImageTextInput"
+      >
+        <b-form-input
+          maxlength="140"
+          placeholder="Ex.: Pizza sabor calabresa dentro de um forno..."
+          id="pizzaImageTextInput"
+          :value="pizza.image_text"
+          @change="handleImageTextChange"
+        />
+        <b-form-invalid-feedback>Obrigatório</b-form-invalid-feedback>
       </b-form-group>
       <b-form-row>
         <b-col cols="9">
@@ -40,9 +54,11 @@
           >
             <b-form-input
               required
+              maxlength="60"
               placeholder="Ex.: Nordestina, Caiçara, Da Casa..."
               id="pizzaNameInput"
-              v-model="formData.name"
+              :value="pizza.name"
+              @change="handleNameChange"
             />
             <b-form-invalid-feedback>Obrigatório</b-form-invalid-feedback>
           </b-form-group>
@@ -59,7 +75,8 @@
               step="0.01"
               placeholder="Ex.: 20.00"
               id="pizzaPriceInput"
-              v-model="formData.price"
+              :value="pizza.price"
+              @change="handlePriceChange"
             />
             <b-form-invalid-feedback>Obrigatório</b-form-invalid-feedback>
           </b-form-group>
@@ -75,7 +92,8 @@
           rows="5"
           placeholder="Ex.: queijo muçarela, manjericão, molho de tomate..."
           id="pizzaIngredientsInput"
-          v-model="formData.ingredients"
+          :value="pizza.ingredients"
+          @change="handleIngredientsChange"
         />
         <b-form-invalid-feedback>Obrigatório</b-form-invalid-feedback>
       </b-form-group>
@@ -104,29 +122,34 @@ export default {
   },
   data() {
     return {
-      formData: {
-        id: this.pizza.id || null,
-        name: this.pizza.name || "",
-        price: this.pizza.price || 0.0,
-        ingredients: this.pizza.ingredients || "",
-        imageUrl:
-          this.pizza.image && this.pizza.image.src
-            ? this.pizza.image.src
-            : null,
-        imageFile: null
-      },
+      formData: {},
       wasValidated: false
     };
   },
   computed: {
     isPizzaImageValid() {
-      return this.formData.imageFile || this.formData.imageUrl ? true : false;
+      return this.formData.image_file || this.pizza.image_file ? true : false;
     }
   },
   methods: {
-    handleSubmit(event) {
+    handleImageFileChange(file) {
+      this.formData = { ...this.formData, image_file: file };
+    },
+    handleImageTextChange(value) {
+      this.formData = { ...this.formData, image_text: value };
+    },
+    handleNameChange(value) {
+      this.formData = { ...this.formData, name: value };
+    },
+    handlePriceChange(value) {
+      this.formData = { ...this.formData, price: value };
+    },
+    handleIngredientsChange(value) {
+      this.formData = { ...this.formData, ingredients: value };
+    },
+    handleSubmit(e) {
       this.wasValidated = true;
-      if (event.target.checkValidity() && this.isPizzaImageValid) {
+      if (e.target.checkValidity() && this.isPizzaImageValid) {
         this.$emit("submit", this.formData);
       }
     }
