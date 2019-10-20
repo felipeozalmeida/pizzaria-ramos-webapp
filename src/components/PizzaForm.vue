@@ -133,9 +133,9 @@ export default {
     handleIngredientsChange(value) {
       this.formData = { ...this.formData, ingredients: value };
     },
-    handleSubmit(event) {
+    handleSubmit(e) {
       this.wasValidated = true;
-      if (event.target.checkValidity() && this.isPizzaImageValid) {
+      if (e.target.checkValidity() && this.isPizzaImageValid) {
         this.$emit("submit", this.formData);
       }
     }
