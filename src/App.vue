@@ -92,8 +92,8 @@ export default {
     handleSearch(search) {
       this.loading = true;
       PizzaService.search(search)
-        .then(({ data: { pizzas } }) => {
-          this.pizzas = pizzas;
+        .then(({ data }) => {
+          this.pizzas = data;
         })
         .catch(() => {
           this.$bvToast.toast(notifications.defaults.message.error, {

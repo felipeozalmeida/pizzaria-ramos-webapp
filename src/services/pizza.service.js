@@ -5,6 +5,9 @@ const PizzaService = {
   list() {
     return ApiService.get("/pizzas/");
   },
+  search(search) {
+    return ApiService.get(`/pizzas/?search=${search}`);
+  },
   create(pizza) {
     return ApiService.post("/pizzas/", convertToFormData(pizza));
   },
